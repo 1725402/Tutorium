@@ -1,6 +1,6 @@
 package Fehler;
 
-public class Test {
+public class Test_Try_Catch {
 	
 	public static void main (String[] args) throws MeinFehler{
 		try {
