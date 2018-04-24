@@ -7,17 +7,17 @@ import java.io.PrintWriter;
 public class Blatt_2 {
 
 	public static void main(String[] args) {
-		int [] i = {18};
-		kehrwerte(i, "test.txt");
+		int [] i = {0};
+		kehrwerte(i, "C:\\Users\\mariu\\Desktop\\Temp\\test.csv");
 	}
 	
-	public static double[] kehrwerte (int[] daten, String datei) {
+	public static void kehrwerte (int[] daten, String datei) {
 		
 		double [] ausgabe = new double [daten.length];
 		PrintWriter pw = null;
 		try{
 			if (daten == null || datei == null)
-			throw new NullPointerException ("Eingabe darf nicht NULL sein");
+				throw new NullPointerException ("Eingabe darf nicht NULL sein");
 			pw = new PrintWriter (new File (datei));
 			int counter = 0;
 			for (int temp : daten) {
@@ -29,18 +29,15 @@ public class Blatt_2 {
 				}
 				counter ++;
 			}
-			for (int o = 0; 0 < ausgabe.length; o++) {
-				double temp = ausgabe [o];
-				pw.print(temp);
-				if (o == ausgabe.length-1) {
-					return ausgabe;
+			for (int o = 0; o < ausgabe.length; o++) {
+				pw.print(ausgabe[o]);
+				if (o < ausgabe.length-1) {
+					pw.print(";");
 				}
-				pw.print(";");
 			}
-			pw.close();
 		}
 		catch (ArithmeticException a) {
-			System.err.println(a.getClass() + a.getMessage());
+			System.err.println("ArithmeticException: " + a.getMessage());
 		}
 		catch (NullPointerException n) {
 			System.err.println(n.getClass() + n.getMessage());
@@ -51,11 +48,6 @@ public class Blatt_2 {
 		finally {
 			pw.close();
 		}
-		
-
-		
-		
-		return ausgabe;
 	}
 
 }
