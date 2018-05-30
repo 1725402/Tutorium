@@ -21,6 +21,5 @@ public class TestDijkstra {
 		ArrayList <KnotenDijkstra> weg = g.kürzersterWeg(1, 6);
 		System.out.println("Kürzester Weg: " + weg);
 		System.out.println("Länge des Weges: " + ((KnotenDijkstra) g.getKnoten(6)).getDistanz());
-		
 	}
 }
