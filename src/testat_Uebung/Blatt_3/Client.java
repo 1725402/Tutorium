@@ -22,7 +22,6 @@ public class Client {
 	 public static void starteClient (ArrayList <Integer> daten, String kommando) {
 		 BufferedWriter out = null;
 		 BufferedReader in = null;
-		 ServerSocket server = null;
 		 Socket s = null;
 		 StringBuilder textBuilder = new StringBuilder();
 		 if (daten != null)
@@ -33,8 +32,7 @@ public class Client {
 		 String text = textBuilder.toString();
 		 try {
 			 System.out.println("Client startet...");
-			 server = new ServerSocket (1234);
-			 s = server.accept();
+			 s = new Socket ("localhost",1234);
 			 out = new BufferedWriter (new OutputStreamWriter (s.getOutputStream()));
 			 System.out.println("Client sendet: " + text);
 			 out.write(text);

@@ -49,8 +49,6 @@ public class Graph {
 		return max;
 	}
 	
-	
-	
 	public void setKnoten (ArrayList<Knoten> liste) {
 		if ((liste==null) || (liste.size() < 1))
 			throw new RuntimeException ("setKnoten:  ungültige Liste");

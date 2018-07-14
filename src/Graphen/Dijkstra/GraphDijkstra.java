@@ -27,22 +27,22 @@ public class GraphDijkstra extends Graph{
 			return null;
 		s.setDistanz(0);
 		ArrayList<KnotenDijkstra> q = new ArrayList<KnotenDijkstra>();
-		for (Knoten kn : getKnoten())
+		for (Knoten kn : getKnoten()) //der Arraylist alle Knoten hinzufügen
 			q.add((KnotenDijkstra) kn);
 		do {
 			KnotenDijkstra gewählt = null;
 			for (KnotenDijkstra x : q) {
 				if (gewählt == null)
 					gewählt = x;
-				if(gewählt.getDistanz() > x.getDistanz())
+				if(gewählt.getDistanz() > x.getDistanz()) //wenn der neue Knoten leichter erreichbar ist, tauschen
 					gewählt = x;
 			}
-			q.remove(gewählt);
-			for(Kante ka: gewählt.getKanten()) {
+			q.remove(gewählt);//aktuelle Auswahl aus Performancegründen löschen 
+			for(Kante ka: gewählt.getKanten()) { //Kanten des Knoten durchlaufen
 				KanteDijkstra kaD= (KanteDijkstra) ka;
 				KnotenDijkstra knD = (KnotenDijkstra) ka.getAnderesEnde(gewählt);
-				if (q.contains(knD)) {
-					if(gewählt.getDistanz() +kaD.getDistanz() < knD.getDistanz()) {
+				if (q.contains(knD)) { //wenn ich noch nicht dort war (noch nicht gelöscht)
+					if(gewählt.getDistanz() +kaD.getDistanz() < knD.getDistanz()) { //wenn neuer Laufweg kleiner dem aktuellen des Knoten ist
 						knD.setDistanz(gewählt.getDistanz()+kaD.getDistanz());
 						knD.setVorgänger(gewählt);
 					}
@@ -51,7 +51,7 @@ public class GraphDijkstra extends Graph{
 		}while (q.size()>0);
 		ArrayList <KnotenDijkstra> aus =new ArrayList<KnotenDijkstra>();
 		KnotenDijkstra x = e;
-		do {
+		do { //vorgänger rückwärts durchlaufen um nur einmal speichern zu müssen
 			aus.add(0,x);
 			x = x.getVorgänger();
 		}while (x != null);
