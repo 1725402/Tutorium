@@ -1,4 +1,4 @@
-package SchlagDenRaab;
+package SchlagDeinTeam;
 
 import java.io.Serializable;
 
@@ -6,16 +6,16 @@ public class GruppenSpiel extends MiniSpiel implements Serializable{
 	private String beschreibung;
 	private int spielNummer;
 	
-	private GruppenSpiel(String name) throws SdRException {
+	private GruppenSpiel(String name) throws SdTException {
 		super(name);
 		this.spielNummer = super.getAnzahlSpiele();
 	}
-	public GruppenSpiel (String name, String beschreibung) throws SdRException {
+	public GruppenSpiel (String name, String beschreibung) throws SdTException {
 		this(name);
 		if (beschreibung != null && beschreibung.length()>3)
 			this.setBeschreibung(beschreibung);
 		else
-			throw new SdRException("Beschreibung ungültig");
+			throw new SdTException("Beschreibung ungültig");
 	}
 	public String getBeschreibung() {
 		return beschreibung;

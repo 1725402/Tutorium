@@ -1,18 +1,19 @@
-package SchlagDenRaab;
+package SchlagDeinTeam;
 
 import java.io.Serializable;
 
-import SchlagDenRaab.SdRException;
+import SchlagDeinTeam.SdTException;
 
 public abstract class MiniSpiel implements Serializable {
 	private static int anzSpiele = 0;
 	private String name;
+	private int[] ergebnis;
 	
-	public MiniSpiel (String name) throws SdRException {
+	public MiniSpiel (String name) throws SdTException {
 		if (name != null && name.length() >= 3)
 		 this.setName(name);
 		else
-			throw new SdRException ("Falsche Namenseingabe");
+			throw new SdTException ("Falsche Namenseingabe");
 		incAnzahlSpiele();
 	}
 	private void incAnzahlSpiele() {
@@ -26,6 +27,12 @@ public abstract class MiniSpiel implements Serializable {
 	}
 	private void setName(String name) {
 		this.name = name;
+	}
+	public void setErgebnis(int[] ergebnis) {
+		this.ergebnis = ergebnis;
+	}
+	public int[] getErgebnis() {
+		return ergebnis;
 	}
 	
 }

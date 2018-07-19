@@ -1,4 +1,4 @@
-package SchlagDenRaab;
+package SchlagDeinTeam;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -17,7 +17,7 @@ public class persistenzSerialisiert {
 		return file;
 	}
 	
-	public Object laden (String fullName) {
+	public Object laden (String fullName) throws SdTException {
 		File file = öffnen(fullName);
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
@@ -27,24 +27,24 @@ public class persistenzSerialisiert {
 			ois = new ObjectInputStream (fis);
 			objekt = ois.readObject();
 		} catch (FileNotFoundException e) {
-			new SdRException ("Ladefehler - Datei konnte nicht gefunden werden");
+			throw new SdTException ("Ladefehler - Datei konnte nicht gefunden werden");
 		} catch (IOException e) {
-			new SdRException ("Ladefehler - Datei konnte nicht gelesen werden");
+			throw new SdTException ("Ladefehler - Datei konnte nicht gelesen werden");
 		} catch (ClassNotFoundException e) {
-			new SdRException ("Ladefehler - Ungültige Speicherinformation");
+			throw new SdTException ("Ladefehler - Ungültige Speicherinformation");
 		}finally {
 			try {
 				fis.close();
 				ois.close();
 			} catch (IOException e) {
-				new SdRException("Ladefehler - Streams konnten nicht geschlossen werden");
+				throw new SdTException("Ladefehler - Streams konnten nicht geschlossen werden");
 			}
 			
 		}
 		return objekt;
 	}
 	
-	public void speichern (String fullName, Object object) {
+	public void speichern (String fullName, Object object) throws SdTException {
 		ObjectOutputStream oos = null;
 		FileOutputStream fos = null;
 		File file = öffnen (fullName);
@@ -52,18 +52,18 @@ public class persistenzSerialisiert {
 			fos = new FileOutputStream (file);
 			oos = new ObjectOutputStream (fos);
 			oos.writeObject(object);
-		} catch (FileNotFoundException e) {
-		} catch (IOException e) {
+		} catch (Exception e) {
+			new SdTException ("");
 		}finally {
 			try {
 				fos.close();
 			} catch (IOException e) {
-				new SdRException ("Speicherfehler - FileOutputStream konnte nicht geschlossen werden");
+				 throw new SdTException ("Speicherfehler - FileOutputStream konnte nicht geschlossen werden");
 			}
 			try {
 				oos.close();
 			} catch (IOException e) {
-				new SdRException ("Speicherfehler - ObjectOutputStream konnte nicht geschlossen werden");
+				throw new SdTException ("Speicherfehler - ObjectOutputStream konnte nicht geschlossen werden");
 			}
 		}
 	}
