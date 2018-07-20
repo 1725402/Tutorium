@@ -1,6 +1,7 @@
 package SchlagDeinTeam;
 
 import SchlagDeinTeam.GUI.WindowSpielleiter;
+import SchlagDeinTeam.GUI.spielEingabe;
 
 public class Testen {
 
@@ -20,7 +21,8 @@ public class Testen {
 //		}
 //		
 //		
-		new WindowSpielleiter("Titel_Tester");
+//		new WindowSpielleiter("Titel_Tester");
+		new spielEingabe();
 	}
 
 }

@@ -8,4 +8,6 @@ public interface bedienerInterface {
 	public void speichern(String ort) throws SdTException;
 	public int getRunde();
 	public void setNächstesSpiel() throws SdTException;
+	public void setErgebnis(int[] ergebnis);
+	int anzSpiele();
 }
