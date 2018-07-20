@@ -183,11 +183,12 @@ public class spielEingabe extends Thread{
 		
 		JButton btnFortfahren = new JButton("Fortfahren");
 		
-		btnFortfahren.setBounds(566, 320, 128, 23);
+		btnFortfahren.setSize((int)(textField.getBounds().getWidth()*0.5), (int)(textField.getBounds().getHeight()));
+		btnFortfahren.setBounds((int)(textField.getBounds().getMaxX()-btnFortfahren.getSize().getWidth()), (int)(textArea.getBounds().getMaxY()+textField.getSize().getHeight()), (int) btnFortfahren.getSize().getWidth(), (int) btnFortfahren.getSize().getHeight());
 		pn.add(btnFortfahren);
 		
 		JButton btnSpeichern = new JButton("Speichern");
-		btnSpeichern.setBounds(566, 287, 128, 23);
+		btnSpeichern.setBounds((int)btnFortfahren.getBounds().getMinX(), (int)(btnFortfahren.getBounds().getMaxY()+textField.getSize().getHeight()*0.5), (int) btnFortfahren.getSize().getWidth(), (int) btnFortfahren.getSize().getHeight());
 		btnSpeichern.addActionListener(new ActionListener() {
 
 			@Override
