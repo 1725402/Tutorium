@@ -20,9 +20,9 @@ public class Spiel implements Serializable, bedienerInterface{
 		speicher.speichern(ort,  this);
 	}
 	
-	public void laden (String ort) throws SdTException {
+	public Spiel laden (String ort) throws SdTException {
 		persistenzSerialisiert speicher = new persistenzSerialisiert ();
-		spiel =(Spiel) speicher.laden(ort);
+		return (Spiel) speicher.laden(ort);
 	}
 
 	@Override
@@ -55,5 +55,8 @@ public class Spiel implements Serializable, bedienerInterface{
 	public int anzSpiele () {
 		return spiele.size();
 	}
-	
+	@Override
+	public void addSpiel(MiniSpiel spiel) {
+		spiele.add(spiel);
+	}
 }

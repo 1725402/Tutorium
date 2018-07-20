@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import SchlagDeinTeam.SdTException;
 
+@SuppressWarnings("serial")
 public abstract class MiniSpiel implements Serializable {
 	private static int anzSpiele = 0;
 	private String name;
@@ -19,6 +20,7 @@ public abstract class MiniSpiel implements Serializable {
 	private void incAnzahlSpiele() {
 		anzSpiele++;
 	}
+	@SuppressWarnings("static-access")
 	protected int getAnzahlSpiele() {
 		return this.anzSpiele;
 	}

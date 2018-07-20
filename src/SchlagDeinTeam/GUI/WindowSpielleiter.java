@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import SchlagDeinTeam.MiniSpiel;
 import SchlagDeinTeam.SdTException;
 import SchlagDeinTeam.Spiel;
 import SchlagDeinTeam.bedienerInterface;
@@ -35,7 +36,7 @@ import SchlagDeinTeam.bedienerInterface;
 
 
 public class WindowSpielleiter extends Thread{
-	JFrame frm;
+	static JFrame frm;
 	Dimension size;
 	Dimension iconSize;
 	JPanel spielSteuerung = new JPanel();
@@ -51,51 +52,20 @@ public class WindowSpielleiter extends Thread{
 	/**
 	 * @wbp.nonvisual location=1240,498
 	 */
-	public WindowSpielleiter (String name) {
-		int start = JOptionPane.showConfirmDialog(null, "Möchten Sie einen vorhandenen Spielstand laden?", "Startoption", JOptionPane.YES_NO_CANCEL_OPTION);
-		int[] temp = {98,77};
-		bi = new Spiel();
-		bi.setErgebnis(temp);
-		initialize(name);
-		switch (start) {
-		case 0:{
-			chooser = new JFileChooser();
-			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			chooser.setFileFilter(new FileNameExtensionFilter("SchlagdeinTeam Datei", "sdt"));
-			if (chooser.showOpenDialog(frm) == JFileChooser.APPROVE_OPTION) {
-				try {
-					bi.speichern(chooser.getSelectedFile().getAbsolutePath());
-				}catch (SdTException e) {
-					JOptionPane.showMessageDialog(null, "Laden konnte nicht durchgeführt werden", "Ladefehler", JOptionPane.ERROR_MESSAGE);
-				}
-			}else
-				JOptionPane.showMessageDialog(null, "keine Datei ausgewählt", "Ladefehler", JOptionPane.ERROR_MESSAGE);
-		}case 1:{
-			spieleEingeben();
-			break;
-		}default:{
-			System.exit(0);
-		}
-		}
+	
+	public WindowSpielleiter (bedienerInterface bi) {
+		WindowSpielleiter.bi = bi;
+		initialize();
 		frm.setVisible(true);
 		start();
-		
-	}
-	
-	
-	private void spieleEingeben() {
-		
-		
 	}
 
-
-	private void initialize(String name) {
+	private void initialize() {
 		size = Toolkit.getDefaultToolkit().getScreenSize();
 		iconSize = new Dimension((int)(size.getHeight()/40), (int)(size.getHeight()/40));
-		frm = new JFrame(name);
+		frm = new JFrame();
 		frm.setUndecorated(true);
 		
-		frm.setTitle(name);
 		frm.setResizable(false);
 		frm.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frm.getContentPane().setLayout(new GridLayout(1,0,0,0));
@@ -268,8 +238,7 @@ public class WindowSpielleiter extends Thread{
 		int pixelButton = (int)(punkteStand1.getSize().getWidth()*0.18);
 		Font punkte = new Font("Tahoma", Font.BOLD, (int)(pixelButton*0.45));
 		int c=0;
-//		for (int i = 1; i <= bi.anzSpiele(); i++) {
-		for (int i = 1; i <= 20; i++) { //Test
+		for (int i = 1; i <= bi.anzSpiele(); i++) {
 			JButton tempLinks = new JButton("" + i);
 			tempLinks.setName("" + c++);//Position in ArrayList
 			tempLinks.setActionCommand(tempLinks.getText()+ ";" + tempLinks.getName());
@@ -303,40 +272,58 @@ public class WindowSpielleiter extends Thread{
 				feldLinksUnten += pixelButton*1.16;
 				feldRechtsUnten += pixelButton*1.16;
 			}
-			for (JButton temp: punkteListe) {
-				punkteAnzeige.add(temp);
-				temp.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						temp.setBackground(Color.LIGHT_GRAY);
-						String[] actionKommando = e.getActionCommand().split(";");
-						int[] punkt = {Integer.parseInt(actionKommando[0]),Integer.parseInt(actionKommando[1])};
-						punkteListe.get(punkt[1]+2).setEnabled(true);
-						int team1 = 0;
-						int team2 = 0;
-						if (punkt[1]%2 == 1) {
-							punkteListe.get(punkt[1]+1).setEnabled(true);
-							punkteListe.get(punkt[1]-1).setEnabled(false);
-							team2 = punkt[0];
-						}else {
-							punkteListe.get(punkt[1]+3).setEnabled(true);
-							punkteListe.get(punkt[1]+1).setEnabled(false);
-							team1 = punkt[0];
-						}
-						bi.setErgebnisMiniSpiel(team1, team2);
-						punkteStand1.setText("" + bi.getPunktestand()[0]);
-						punkteStand2.setText("" + bi.getPunktestand()[1]);
-					}
-					
-				});
-			}
+			
 	
 			}
-		
+		for (JButton temp: punkteListe) {
+			punkteAnzeige.add(temp);
+			temp.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					temp.setBackground(Color.LIGHT_GRAY);
+					String[] actionKommando = e.getActionCommand().split(";");
+					int[] punkt = {Integer.parseInt(actionKommando[0]),Integer.parseInt(actionKommando[1])};
+					if (bi.anzSpiele()==Integer.parseInt(temp.getText())) {
+						for (JButton t: punkteListe)
+							t.setEnabled(false);
+						
+						if (punkt[1]%2 ==0)
+							punkteStand1.setText("" + (Integer.parseInt(punkteStand1.getText())+punkt[0]));
+						else
+							punkteStand2.setText("" + (Integer.parseInt(punkteStand2.getText())+punkt[0]));
+						return;
+					}
+					punkteListe.get(punkt[1]+2).setEnabled(true);
+					int team1 = 0;
+					int team2 = 0;
+					if (punkt[1]%2 == 0) {
+						punkteListe.get(punkt[1]+1).setEnabled(false);
+						punkteListe.get(punkt[1]+3).setEnabled(true);
+						team1 = punkt[0];
+					}else {
+						punkteListe.get(punkt[1]-1).setEnabled(false);
+						punkteListe.get(punkt[1]+1).setEnabled(true);
+						team2 = punkt[0];
+					}
+//					bi.setErgebnisMiniSpiel(team1, team2);
+					punkteStand1.setText("" + (Integer.parseInt(punkteStand1.getText())+team1));
+					punkteStand2.setText("" + (Integer.parseInt(punkteStand2.getText())+team2));
+				}
+				
+			});
+		}
 	}
 
 
+	public static void setVisible(boolean b) {
+		frm.setVisible(true);
+		
+	}
+
+	public void setSpiele(bedienerInterface bi) {
+		this.bi = bi;
+	}
 
 
 }

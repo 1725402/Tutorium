@@ -21,7 +21,7 @@ public class Testen {
 //		}
 //		
 //		
-//		new WindowSpielleiter("Titel_Tester");
+//		bedienerInterface bi = new Spiel();
 		new spielEingabe();
 	}
 
