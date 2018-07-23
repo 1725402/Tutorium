@@ -32,6 +32,8 @@ import SchlagDeinTeam.GruppenSpiel;
 import SchlagDeinTeam.SdTException;
 import SchlagDeinTeam.Spiel;
 import SchlagDeinTeam.bedienerInterface;
+import javafx.scene.chart.PieChart;
+import javax.swing.JSlider;
 
 
 public class spielEingabe extends Thread{
@@ -42,6 +44,8 @@ public class spielEingabe extends Thread{
 	JTextArea b;
 	JLabel lt;
 	JTextArea t;
+	static int gruppenSpiele = 0;
+	static int einzelSpiele = 0;
 	private bedienerInterface bi;
 	private JTextField textField;
 	private ArrayList<GruppenSpiel>gruppenSpiele;
@@ -80,13 +84,17 @@ public class spielEingabe extends Thread{
 	}
 	
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	private void initialize() {
 		
-		
+		/**
+		 * @wbp.parser.entryPoint
+		 */
 		
 		
 		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-		int textEinrücken = (int) (size.getWidth()*0.07);
 		frm=new JFrame("Spiel hinzufügen");
 		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frm.setBounds((int)(size.getWidth()*0.3),(int)(size.getHeight()*0.3),(int)(size.getWidth()*0.4),(int)(size.getHeight()*0.4));
@@ -99,8 +107,8 @@ public class spielEingabe extends Thread{
 		pn.setVisible(true);
 		JLabel logo = new JLabel();
 		logo.setVisible(true);
-		logo.setIcon(new ImageIcon (new ImageIcon(WindowSpielleiter.class.getResource("/SchlagDeinTeam/GUI/Icons/Logo_klein.png")).getImage().getScaledInstance((int)(size.getWidth()*0.1), (int)(size.getWidth()*0.1), Image.SCALE_DEFAULT)));
-		logo.setBounds(0,0,logo.getIcon().getIconWidth(),logo.getIcon().getIconWidth());
+		logo.setIcon(new ImageIcon (new ImageIcon(WindowSpielleiter.class.getResource("/SchlagDeinTeam/GUI/Icons/Logo_klein.png")).getImage().getScaledInstance((int)(size.getWidth()*0.05), (int)(size.getWidth()*0.05), Image.SCALE_DEFAULT)));
+		logo.setBounds((int)(frm.getBounds().getWidth()-logo.getIcon().getIconWidth()*1.2),0,logo.getIcon().getIconWidth(),logo.getIcon().getIconWidth());
 		
 		
 		pn.add(logo);
@@ -110,13 +118,13 @@ public class spielEingabe extends Thread{
 		JLabel lblTitel = new JLabel("Titel:");
 		lblTitel.setVerticalAlignment(SwingConstants.TOP);
 		lblTitel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTitel.setBounds(textEinrücken, (int)(logo.getIcon().getIconWidth()*0.5), (int)(logo.getIcon().getIconWidth()*1), (int)(logo.getIcon().getIconWidth()*0.15));
+		lblTitel.setBounds((int)(frm.getSize().getWidth()*0.05), (int)(frm.getSize().getWidth()*0.1), (int)(frm.getSize().getWidth()*0.2), (int)(frm.getSize().getHeight()*0.06));
 		Font schrift = new Font ("Tahoma", Font.BOLD, (int)(lblTitel.getSize().getHeight()*0.8));
 		lblTitel.setFont(schrift);
 		pn.add(lblTitel);
 		
 		textField = new JTextField();
-		textField.setBounds((int)(lblTitel.getBounds().getMaxX()*1.1),(int)(lblTitel.getBounds().getMinY()),(int)((frm.getBounds().getWidth()-lblTitel.getBounds().getWidth()-logo.getIcon().getIconWidth()*1.2)),(int)(lblTitel.getSize().getHeight()));
+		textField.setBounds((int)(lblTitel.getBounds().getMaxX()*1.1),(int)(lblTitel.getBounds().getMinY()),(int)(frm.getSize().getWidth()*0.5),(int)(lblTitel.getSize().getHeight()));
 		pn.add(textField);
 		textField.setColumns(10);
 		
@@ -124,7 +132,7 @@ public class spielEingabe extends Thread{
 		lblBeschreibung.setVerticalAlignment(SwingConstants.TOP);
 		lblBeschreibung.setFont(schrift);
 		lblBeschreibung.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblBeschreibung.setBounds(textEinrücken, (int)(lblTitel.getBounds().getMaxY()*1.01), (int)lblTitel.getSize().getWidth(), (int)lblTitel.getSize().getHeight());
+		lblBeschreibung.setBounds((int)lblTitel.getBounds().getMinX(), (int)(lblTitel.getBounds().getMaxY()*1.1), (int)lblTitel.getSize().getWidth(), (int)lblTitel.getSize().getHeight());
 		pn.add(lblBeschreibung);
 		
 		JTextArea textArea = new JTextArea();
@@ -173,8 +181,14 @@ public class spielEingabe extends Thread{
 			
 		});
 		
+		JLabel lblVerhältnis = new JLabel("noch keine Spiele hinzugefügt");
+		lblVerhältnis.setHorizontalAlignment(SwingConstants.CENTER);
+		lblVerhältnis.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblVerhältnis.setBounds((int)(frm.getSize().getWidth()*0.05), (int)(textArea.getBounds().getMaxY() + lblTitel.getSize().getHeight()), (int)(frm.getSize().getWidth()*0.55), (int)(lblTitel.getSize().getHeight()));
+		pn.add(lblVerhältnis);
+		
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBounds((int)(textField.getBounds().getMinX()), (int)(logo.getIcon().getIconWidth()*0.2), (int)(logo.getIcon().getIconWidth()*1.2), (int)(logo.getIcon().getIconWidth()*0.18));
+		list.setBounds((int)(textField.getBounds().getMinX()), (int)(logo.getIcon().getIconWidth()*0.2), (int)(frm.getSize().getWidth()*0.5), (int)(textField.getBounds().getHeight()*1.5));
 		
 		c1.setSize((int)(list.getSize().getWidth()/2),(int)list.getSize().getHeight());
 		c2.setSize((int)(list.getSize().getWidth()/2),(int)list.getSize().getHeight());
@@ -185,12 +199,10 @@ public class spielEingabe extends Thread{
 		
 		JButton btnFortfahren = new JButton("Fortfahren");
 		
-		btnFortfahren.setSize((int)(textField.getBounds().getWidth()*0.5), (int)(textField.getBounds().getHeight()));
-		btnFortfahren.setBounds((int)(textField.getBounds().getMaxX()-btnFortfahren.getSize().getWidth()), (int)(textArea.getBounds().getMaxY()+textField.getSize().getHeight()), (int) btnFortfahren.getSize().getWidth(), (int) btnFortfahren.getSize().getHeight());
+		btnFortfahren.setSize((int)(textField.getBounds().getWidth()*0.35), (int)(textField.getBounds().getHeight()));
 		pn.add(btnFortfahren);
 		
 		JButton btnSpeichern = new JButton("Speichern");
-		btnSpeichern.setBounds((int)btnFortfahren.getBounds().getMinX(), (int)(btnFortfahren.getBounds().getMaxY()+textField.getSize().getHeight()*0.5), (int) btnFortfahren.getSize().getWidth(), (int) btnFortfahren.getSize().getHeight());
 		btnSpeichern.addActionListener(new ActionListener() {
 
 			@Override
@@ -199,14 +211,29 @@ public class spielEingabe extends Thread{
 
 					if(c1.isSelected()) {
 						bi.addSpiel(new EinzelSpiel (textField.getText(), textArea.getText()));
-						textField.setText("");
-						textArea.setText("");
-					}else
+						
+						einzelSpiele++;
+					}else {
 						bi.addSpiel(new GruppenSpiel (textField.getText(), textArea.getText()));
-					
+						gruppenSpiele++;
+					}
+					textField.setText("");
+					textArea.setText("");
 				}catch (SdTException arg0) {
 					JOptionPane.showMessageDialog(frm, "" + "Eingaben überprüfen!", "Fehler", JOptionPane.ERROR_MESSAGE);
 				}
+				String string1, string2;
+				if (einzelSpiele == 1) {
+					string1 = " Einzelspiel und ";
+				}
+				else {
+					string1 = " Einzelspiele und ";
+				}
+				if (gruppenSpiele == 1)
+					string2 = " Gruppenspiel";
+				else
+					string2 = " Gruppenspiele";
+				lblVerhältnis.setText("Bisher hinzugefüht:" + einzelSpiele + string1 + gruppenSpiele + string2);
 			}
 			
 		});
@@ -224,7 +251,16 @@ public class spielEingabe extends Thread{
 			}
 				
 		});
+		
+		
+		btnSpeichern.setBounds((int)(textField.getBounds().getMaxX()-btnFortfahren.getSize().getWidth()), (int)(textArea.getBounds().getMaxY()+textField.getSize().getHeight()), (int) btnFortfahren.getSize().getWidth(), (int) btnFortfahren.getSize().getHeight());
+		btnFortfahren.setBounds((int)btnSpeichern.getBounds().getMinX(), (int)(btnSpeichern.getBounds().getMaxY()+textField.getSize().getHeight()*0.5), (int) btnSpeichern.getSize().getWidth(), (int) btnSpeichern.getSize().getHeight());
+		
 		pn.add(btnSpeichern);
+		
+		
+		
+	
 		frm.setVisible(true);
 	}
 }
