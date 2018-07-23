@@ -1,5 +1,7 @@
 package SchlagDeinTeam;
 
+import java.util.ArrayList;
+
 public interface bedienerInterface {
 
 	public int[] getPunktestand();
@@ -11,4 +13,6 @@ public interface bedienerInterface {
 	public void setErgebnis(int[] ergebnis);
 	int anzSpiele();
 	void addSpiel(MiniSpiel spiel);
+	String ladenCSV(String fullName) throws SdTException;
+	void speichernCSV(String fullName, ArrayList<String> tn) throws SdTException;
 }

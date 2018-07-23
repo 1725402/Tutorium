@@ -7,13 +7,10 @@ public class Spiel implements Serializable, bedienerInterface{
 	private static Spiel spiel;
 	private static int runde = 1;
 	private ArrayList <MiniSpiel> spiele = new ArrayList <MiniSpiel>();
-	private int[] punkteStand;
+	private int[] punkteStand = {0,0};
 	private MiniSpiel aktuellesSpiel;
 	
-	public void Spiel () {
-		punkteStand[0]=0;
-		punkteStand[1]=0;
-	}
+	public Spiel () {}
 	
 	public void speichern(String ort) throws SdTException {
 		persistenzSerialisiert speicher = new persistenzSerialisiert ();
@@ -21,10 +18,22 @@ public class Spiel implements Serializable, bedienerInterface{
 	}
 	
 	public Spiel laden (String ort) throws SdTException {
-		persistenzSerialisiert speicher = new persistenzSerialisiert ();
-		return (Spiel) speicher.laden(ort);
+		persistenzSerialisiert laden = new persistenzSerialisiert ();
+		return (Spiel) laden.laden(ort);
 	}
 
+	@Override 
+	public String ladenCSV (String fullName) throws SdTException {
+		persistenzSerialisiert laden = new persistenzSerialisiert();
+		return (String) laden.ladenCSV(fullName);
+	}
+	
+	@Override
+	public void speichernCSV (String fullName, ArrayList<String> tn) throws SdTException{
+		persistenzSerialisiert speicher = new persistenzSerialisiert ();
+		speicher.speichern(fullName,  tn);
+	}
+	
 	@Override
 	public int[] getPunktestand() {
 		return punkteStand;

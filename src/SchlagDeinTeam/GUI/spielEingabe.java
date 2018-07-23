@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,6 +44,7 @@ public class spielEingabe extends Thread{
 	JTextArea t;
 	private bedienerInterface bi;
 	private JTextField textField;
+	private ArrayList<GruppenSpiel>gruppenSpiele;
 	
 	
 	
