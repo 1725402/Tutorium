@@ -33,7 +33,6 @@ public class spielerEintragen {
 			chooser.setFileFilter(new FileNameExtensionFilter("Teilnehmer-Liste", "tn"));
 			if (chooser.showOpenDialog(frm) == JFileChooser.APPROVE_OPTION) {
 				String teilnehmer = chooser.getSelectedFile().getAbsolutePath();
-				
 			}
 			break;
 		}case 1:{
