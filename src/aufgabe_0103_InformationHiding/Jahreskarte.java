@@ -1,4 +1,4 @@
-package Aufgabe_0103;
+package aufgabe_0103_InformationHiding;
 
 import java.sql.Date;
 

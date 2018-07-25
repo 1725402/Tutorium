@@ -1,6 +1,6 @@
-package Aufgabe_0102.Kunde;
+package aufgabe_0102_InformationHiding_Package.Kunde;
 
-import Aufgabe_0102.YourPhone.Produkt;
+import aufgabe_0102_InformationHiding_Package.YourPhone.Produkt;
 
 public class Käufer {
 	private Produkt[] bestellKatalog = null;

@@ -1,4 +1,4 @@
-package Aufgabe_0101;
+package aufgabe_0101_Getter_Setter;
 
 public class testProdukt {
 	

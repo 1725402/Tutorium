@@ -1,4 +1,4 @@
-package Aufgabe_0104;
+package aufgabe_0104_Override;
 
 public class Veranstaltung extends Object {
 	private String dozent;

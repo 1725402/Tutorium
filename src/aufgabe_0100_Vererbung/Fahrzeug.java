@@ -1,4 +1,4 @@
-package Aufgabe_0100;
+package aufgabe_0100_Vererbung;
 
 abstract class Fahrzeug {
 	private String fahrzeugTyp;

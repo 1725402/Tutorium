@@ -1,4 +1,4 @@
-package Aufgabe_0102.YourPhone;
+package aufgabe_0102_InformationHiding_Package.YourPhone;
 
 public class Produkt {
 

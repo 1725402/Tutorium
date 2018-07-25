@@ -1,7 +1,7 @@
-package Aufgabe_0102;
+package aufgabe_0102_InformationHiding_Package;
 
-import Aufgabe_0102.Kunde.Käufer;
-import Aufgabe_0102.YourPhone.Produkt;
+import aufgabe_0102_InformationHiding_Package.Kunde.Käufer;
+import aufgabe_0102_InformationHiding_Package.YourPhone.Produkt;
 
 public class testAufgabe {
 	public static void main (String[] args) {
