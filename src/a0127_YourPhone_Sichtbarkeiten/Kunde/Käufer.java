@@ -1,6 +1,6 @@
-package aufgabe_0102_InformationHiding_Package.Kunde;
+package a0127_YourPhone_Sichtbarkeiten.Kunde;
 
-import aufgabe_0102_InformationHiding_Package.YourPhone.Produkt;
+import a0127_YourPhone_Sichtbarkeiten.YourPhone.Produkt;
 
 public class Käufer {
 	private Produkt[] bestellKatalog = null;

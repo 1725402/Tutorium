@@ -1,4 +1,4 @@
-package aufgabe_0104_Override;
+package a0143_Override_Student;
 
 public class StudentTest {
 	public static void main (String[] args) {

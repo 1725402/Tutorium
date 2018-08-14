@@ -1,4 +1,4 @@
-package aufgabe_0101_Getter_Setter;
+package a0132_GetterSetter_Versandhaus;
 
 public class testProdukt {
 	

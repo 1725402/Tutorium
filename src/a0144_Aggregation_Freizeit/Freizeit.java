@@ -1,4 +1,4 @@
-package aufgabe_0105_Aggregation;
+package a0144_Aggregation_Freizeit;
 
 public class Freizeit {
 	private Mensch[] teilnehmer = new Mensch[30];

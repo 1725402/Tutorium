@@ -1,4 +1,4 @@
-package aufgabe_0100_Vererbung;
+package a0143_Fahrzeugvererbung;
 
 public class Flugzeug extends Fahrzeug{
 

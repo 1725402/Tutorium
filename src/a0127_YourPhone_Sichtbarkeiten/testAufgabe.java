@@ -1,7 +1,7 @@
-package aufgabe_0102_InformationHiding_Package;
+package a0127_YourPhone_Sichtbarkeiten;
 
-import aufgabe_0102_InformationHiding_Package.Kunde.Käufer;
-import aufgabe_0102_InformationHiding_Package.YourPhone.Produkt;
+import a0127_YourPhone_Sichtbarkeiten.Kunde.Käufer;
+import a0127_YourPhone_Sichtbarkeiten.YourPhone.Produkt;
 
 public class testAufgabe {
 	public static void main (String[] args) {

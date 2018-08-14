@@ -1,4 +1,4 @@
-package aufgabe_0102_InformationHiding_Package.YourPhone;
+package a0127_YourPhone_Sichtbarkeiten.YourPhone;
 
 public class Produkt {
 
