@@ -8,13 +8,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import EKJW.teilNehmer;
 
 public class spielerEintragen {
 	JFrame frm;
 	JPanel pnl;
 	JFileChooser chooser;
-	ArrayList <teilNehmer> tn;
 	
 	/**
 	 * Parameterloser Konstruktor
