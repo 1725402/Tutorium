@@ -13,12 +13,23 @@ import java.util.ArrayList;
 
 public class persistenzSerialisiert {
 	
+	/**
+	 * Öffnet eine Datei
+	 * @param fullName Speicherort der Datei
+	 * @return Datei, welche geöffnet wurde
+	 */
 	private File öffnen (String fullName) {
 		File file = null;
 		file = new File ((String)(fullName + ".sdr"));
 		return file;
 	}
 	
+	/**
+	 * Lädt ein Objekt aus einer Datei
+	 * @param fullName voller Speicherort der Datei
+	 * @return Geladenes Objekt aus der Datei
+	 * @throws SdTException Fehlermeldung, wenn falsche Parameter eingegeben wurden
+	 */
 	public Object laden (String fullName) throws SdTException {
 		File file = öffnen(fullName);
 		FileInputStream fis = null;
@@ -46,6 +57,12 @@ public class persistenzSerialisiert {
 		return objekt;
 	}
 	
+	/**
+	 * Speichert ein Objekt in einer Datei
+	 * @param fullName voller Speicherort der Datei
+	 * @param object zu speicherndes Objekt
+	 * @throws SdTException
+	 */
 	public void speichern (String fullName, Object object) throws SdTException {
 		ObjectOutputStream oos = null;
 		FileOutputStream fos = null;
@@ -70,6 +87,12 @@ public class persistenzSerialisiert {
 		}
 	}
 	
+	/**
+	 * läft ein Objekt aus einer CSV Datei
+	 * @param fullName voller Speicherort, der ausgelesenwerden soll
+	 * @return geladenes Ojekt
+	 * @throws SdTException Fehlermeldung bei falschen Parametern
+	 */
 	public Object ladenCSV (String fullName) throws SdTException {
 		File file = öffnen(fullName);
 		FileInputStream fis = null;
@@ -95,6 +118,12 @@ public class persistenzSerialisiert {
 		return objekt;
 	}
 	
+	/**
+	 * speichern ein Objekt in einer Datei
+	 * @param fullName voller Speicherort
+	 * @param object zu speicherndes Objekt
+	 * @throws SdTException Fehlermeldung bei falschen Parametern
+	 */
 	public void speichernCSV (String fullName, ArrayList<String> object) throws SdTException {
 		DataOutputStream dos = null;
 		FileOutputStream fos = null;

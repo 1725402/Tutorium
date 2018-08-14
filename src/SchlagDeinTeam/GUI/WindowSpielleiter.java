@@ -4,9 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,9 +28,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import SchlagDeinTeam.MiniSpiel;
 import SchlagDeinTeam.SdTException;
-import SchlagDeinTeam.Spiel;
 import SchlagDeinTeam.bedienerInterface;
 
 
@@ -39,35 +38,63 @@ public class WindowSpielleiter extends Thread{
 	static JFrame frm;
 	Dimension size;
 	Dimension iconSize;
+	Dimension buttonSize;
+	GraphicsDevice[] gd = null;
+	GraphicsDevice aktuellerBildschirm = null;
+	
+	JMenu mnOptionen; 
+	JMenuItem mntmSpeichern;
+	JMenuItem mntmLaden;
+	JMenuItem mntmBeenden;
+	JMenu mnDesign;
+	JMenuItem mntmBildschirmeTauschen;
+	JMenuItem mntmMaximieren;
+	JMenuItem mntmMinimieren;
+	
 	JPanel spielSteuerung = new JPanel();
 	JPanel punkteAnzeige;
+	
 	JLabel punkteStand1;
 	JLabel punkteStand2;
+	
 	JFileChooser chooser;
+	
 	JToolBar tb = new JToolBar();
-	Dimension buttonSize;
-	static bedienerInterface bi;
+
+	bedienerInterface bi;
 	ArrayList <JButton> punkteListe = new ArrayList<JButton>();
 	Font schrift = new Font ("Areal", Font.PLAIN, 25);
-	/**
-	 * @wbp.nonvisual location=1240,498
-	 */
 	
-	public WindowSpielleiter (bedienerInterface bi) {
-		WindowSpielleiter.bi = bi;
+	/**
+	 * Erstellt das Spielleiterfenster (Konstruktor)
+	 * @param bi Bedienerinterface des Spiels
+	 * @param bildschirme Bildschirme, die angeschlossen sind
+	 */
+	public WindowSpielleiter (bedienerInterface bi, GraphicsDevice[] bildschirme) {
+		if (bildschirme!= null) {
+			this.aktuellerBildschirm = bildschirme[0];
+			this.gd = bildschirme;
+		}
+		this.bi = bi;
 		initialize();
 		frm.setVisible(true);
+		frm.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		start();
 	}
 
+	/**
+	 * Initialisiert das Fenster
+	 */
 	private void initialize() {
-		size = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		size = aktuellerBildschirm.getDefaultConfiguration().getBounds().getSize();
 		iconSize = new Dimension((int)(size.getHeight()/40), (int)(size.getHeight()/40));
-		frm = new JFrame();
+		frm = new JFrame(aktuellerBildschirm.getDefaultConfiguration());
 		frm.setUndecorated(true);
 		
 		frm.setResizable(false);
 		frm.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		aktuellerBildschirm.setFullScreenWindow(frm);
 		frm.getContentPane().setLayout(new GridLayout(1,0,0,0));
 		spielSteuerung.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		spielSteuerung.setVisible(true);
@@ -84,13 +111,13 @@ public class WindowSpielleiter extends Thread{
 		
 		JMenuBar menuBar = new JMenuBar();
 		frm.setJMenuBar(menuBar);
-		
-		JMenu mnOptionen = new JMenu("Optionen");
+
+		mnOptionen = new JMenu("Optionen");
 		mnOptionen.setFont(schrift);
 		mnOptionen.setIcon(new ImageIcon (new ImageIcon(WindowSpielleiter.class.getResource("/SchlagDeinTeam/GUI/Icons/optionen.png")).getImage().getScaledInstance((int)iconSize.getWidth(), (int)iconSize.getHeight(), Image.SCALE_DEFAULT)));
 		menuBar.add(mnOptionen);
 		
-		JMenuItem mntmSpeichern = new JMenuItem("Speichern");
+		mntmSpeichern = new JMenuItem("Speichern");
 		mntmSpeichern.setFont(schrift);
 		mntmSpeichern.setIcon(new ImageIcon (new ImageIcon(WindowSpielleiter.class.getResource("/SchlagDeinTeam/GUI/Icons/speichern.png")).getImage().getScaledInstance((int)iconSize.getWidth(), (int)iconSize.getHeight(), Image.SCALE_DEFAULT)));
 		mntmSpeichern.setSelectedIcon(null);
@@ -115,7 +142,7 @@ public class WindowSpielleiter extends Thread{
 		});
 		mnOptionen.add(mntmSpeichern);
 		
-		JMenuItem mntmLaden = new JMenuItem("Laden");
+		mntmLaden = new JMenuItem("Laden");
 		mntmLaden.setFont(schrift);
 		mntmLaden.setIcon(new ImageIcon (new ImageIcon(WindowSpielleiter.class.getResource("/SchlagDeinTeam/GUI/Icons/Laden_neu.png")).getImage().getScaledInstance((int)iconSize.getWidth(), (int)iconSize.getHeight(), Image.SCALE_DEFAULT)));
 		mntmLaden.setSelectedIcon(null);
@@ -136,19 +163,18 @@ public class WindowSpielleiter extends Thread{
 				}else
 					JOptionPane.showMessageDialog(null, "Keine Gültige Datei ausgewählt", "Ladefehler", JOptionPane.ERROR_MESSAGE);
 			}
-			
 		});
 		mnOptionen.add(mntmLaden);
 		mnOptionen.add(new JSeparator());
 		
-		JMenuItem mntmBeenden = new JMenuItem("Beenden");
+		mntmBeenden = new JMenuItem("Beenden");
 		mntmBeenden.setFont(schrift);
 		mntmBeenden.setIcon(new ImageIcon (new ImageIcon(WindowSpielleiter.class.getResource("/SchlagDeinTeam/GUI/Icons/Beenden.png")).getImage().getScaledInstance((int)iconSize.getWidth(), (int)iconSize.getHeight(), Image.SCALE_DEFAULT)));
 		mntmBeenden.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int Auswahl = JOptionPane.showConfirmDialog(null, "Spiel vorher speichern?", "Programm beenden Optionen", JOptionPane.YES_NO_CANCEL_OPTION);
+				int Auswahl = JOptionPane.showConfirmDialog(frm, "Spiel vorher speichern?", "Programm beenden Optionen", JOptionPane.YES_NO_CANCEL_OPTION);
 				switch (Auswahl) {
 				case 0:		mntmSpeichern.doClick();
 				case 1:	{
@@ -163,22 +189,35 @@ public class WindowSpielleiter extends Thread{
 		mnOptionen.add(mntmBeenden);
 		mnOptionen.add(new JSeparator());
 		
-		JMenu mnDesign = new JMenu("Design");
+		mnDesign = new JMenu("Design");
 		mnDesign.setFont(schrift);
 		mnDesign.setIcon(new ImageIcon (new ImageIcon(WindowSpielleiter.class.getResource("/SchlagDeinTeam/GUI/Icons/design.png")).getImage().getScaledInstance((int)iconSize.getWidth(), (int)iconSize.getHeight(), Image.SCALE_DEFAULT)));
 		mnOptionen.add(mnDesign);
 		
-		JMenuItem mntmBildschirmeTauschen = new JMenuItem("Bildschirme Tauschen");
+		mntmBildschirmeTauschen = new JMenuItem("Bildschirme Tauschen");
 		mntmBildschirmeTauschen.setFont(schrift);
 		mntmBildschirmeTauschen.setIcon(new ImageIcon (new ImageIcon(WindowSpielleiter.class.getResource("/SchlagDeinTeam/GUI/Icons/tauschen.png")).getImage().getScaledInstance((int)iconSize.getWidth(), (int)iconSize.getHeight(), Image.SCALE_DEFAULT)));
+		mntmBildschirmeTauschen.addActionListener(new ActionListener () {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+				gd = ge.getScreenDevices();
+				if (gd.length == 2) {
+					new WindowSpielleiter(bi,new GraphicsDevice[]{gd[1],gd[0]});
+					frm.setVisible(false);
+					frm.removeAll();
+					frm = null;
+				}else if (gd.length == 1) {
+					return;
+				}
+				else
+					JOptionPane.showMessageDialog(frm, "0 oder mehr als 2 Anzeigen angeschlossen", "Ungltige Bildschirmzahl", JOptionPane.CLOSED_OPTION);
+			}
+		});
 		mnDesign.add(mntmBildschirmeTauschen);
 		
-		JMenuItem mntmMaximieren = new JMenuItem("Maximieren");
-		mntmMaximieren.setFont(schrift);
-		mntmMaximieren.setIcon(new ImageIcon (new ImageIcon(WindowSpielleiter.class.getResource("/SchlagDeinTeam/GUI/Icons/maximieren.png")).getImage().getScaledInstance((int)iconSize.getWidth(), (int)iconSize.getHeight(), Image.SCALE_DEFAULT)));
-		mnDesign.add(mntmMaximieren);
-		
-		JMenuItem mntmMinimieren = new JMenuItem("Minimieren");
+		mntmMinimieren = new JMenuItem("Minimieren");
 		mntmMinimieren.setFont(schrift);
 		mntmMinimieren.setIcon(new ImageIcon (new ImageIcon(WindowSpielleiter.class.getResource("/SchlagDeinTeam/GUI/Icons/minimieren.png")).getImage().getScaledInstance((int)iconSize.getWidth(), (int)iconSize.getHeight(), Image.SCALE_DEFAULT)));
 		mntmMinimieren.addActionListener(new ActionListener() {
@@ -190,15 +229,12 @@ public class WindowSpielleiter extends Thread{
 			
 		});
 		
-		
-		
 		punkteStand1 = new JLabel();
 		punkteStand1.setHorizontalAlignment(SwingConstants.CENTER);
 		punkteStand1.setForeground(Color.YELLOW);
 
 		punkteStand1.setBackground(Color.DARK_GRAY);
 		punkteStand1.setBounds((int)(punkteAnzeige.getSize().getWidth()*0.2), (int)(punkteAnzeige.getSize().getHeight()*0.2), (int)(punkteAnzeige.getSize().getWidth()*0.2), (int)(punkteAnzeige.getSize().getHeight()*0.25));
-		
 		Font punkte = new Font("Tahoma", Font.BOLD, (int)(punkteStand1.getSize().getHeight()*0.9));
 		
 		punkteStand1.setFont(punkte);
@@ -227,10 +263,10 @@ public class WindowSpielleiter extends Thread{
 		
 	}
 
-
+	/**
+	 * Trägt die Punkte in der Anzeige ein
+	 */
 	private void punkteEintragen() {
-		
-		
 		double feldLinks = punkteStand1.getBounds().getMinX();
 		double feldLinksUnten = punkteStand1.getBounds().getMaxY()*1.02;
 		double feldRechts = punkteStand2.getBounds().getMinX();
@@ -306,24 +342,32 @@ public class WindowSpielleiter extends Thread{
 						punkteListe.get(punkt[1]+1).setEnabled(true);
 						team2 = punkt[0];
 					}
-//					bi.setErgebnisMiniSpiel(team1, team2);
+					try {
+						bi.setErgebnisMiniSpiel(team1, team2);
+					} catch (SdTException e1) {
+						JOptionPane.showConfirmDialog(frm, "Punkte speichern fehlgeschlagen","Kritischer Fehler",JOptionPane.ERROR_MESSAGE);
+					}
 					punkteStand1.setText("" + (Integer.parseInt(punkteStand1.getText())+team1));
 					punkteStand2.setText("" + (Integer.parseInt(punkteStand2.getText())+team2));
 				}
-				
+			
 			});
 		}
 	}
 
-
+	/**
+	 * Ändert den Sichtbarkeitszustand des Fensters
+	 * @param b Wahrheitswert ob das Fenster Sichtbar (true) oder nicht Sichtbar (false) sein soll
+	 */
 	public static void setVisible(boolean b) {
-		frm.setVisible(true);
-		
+		frm.setVisible(b);
 	}
 
+	/**
+	 * Setzt ein neues Benienerinterface
+	 * @param bi neues Bedienerinterface
+	 */
 	public void setSpiele(bedienerInterface bi) {
 		this.bi = bi;
 	}
-
-
 }

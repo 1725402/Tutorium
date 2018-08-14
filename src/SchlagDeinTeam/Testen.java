@@ -1,11 +1,12 @@
 package SchlagDeinTeam;
 
+import SchlagDeinTeam.GUI.SpieleSortieren;
 import SchlagDeinTeam.GUI.WindowSpielleiter;
 import SchlagDeinTeam.GUI.spielEingabe;
 
 public class Testen {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SdTException {
 //		persistenzSerialisiert temp = new persistenzSerialisiert();
 //		try {
 //			MiniSpiel temp1 = new EinzelSpiel ("Spiel05", "beschreibung");
@@ -21,8 +22,12 @@ public class Testen {
 //		}
 //		
 //		
-//		bedienerInterface bi = new Spiel();
-		new spielEingabe();
+		bedienerInterface bi = new Spiel();
+		bi.addSpiel(new EinzelSpiel("SpielA","Beschreibung A"));
+		bi.addSpiel(new GruppenSpiel("SpielB","Beschreibung B"));
+		bi.addSpiel(new EinzelSpiel("SpielC","Beschreibung C"));
+		bi.addSpiel(new EinzelSpiel("SpielD","Beschreibung D"));
+		new SpieleSortieren(bi,null);
 	}
 
 }

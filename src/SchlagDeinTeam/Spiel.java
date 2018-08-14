@@ -31,7 +31,7 @@ public class Spiel implements Serializable, bedienerInterface{
 	@Override
 	public void speichernCSV (String fullName, ArrayList<String> tn) throws SdTException{
 		persistenzSerialisiert speicher = new persistenzSerialisiert ();
-		speicher.speichern(fullName,  tn);
+		speicher.speichernCSV(fullName, tn);
 	}
 	
 	@Override
@@ -44,21 +44,24 @@ public class Spiel implements Serializable, bedienerInterface{
 	}
 	
 	@Override
-	public void setErgebnisMiniSpiel(int team1, int team2) {
+	public void setErgebnisMiniSpiel(int team1, int team2) throws SdTException {
 		aktuellesSpiel.setErgebnis(new int [] {team1,team2});
-		
+		setNächstesSpiel();
 	}
 
 	@Override
 	public int getRunde() {
 		return runde;
 	}
-
-	@Override
-	public void setNächstesSpiel() throws SdTException {
+	/**
+	 * Legt atomatisch das nächste Spiel fest
+	 * @throws SdTException
+	 */
+	private void setNächstesSpiel() throws SdTException {
 		if (aktuellesSpiel.getErgebnis() == null) {
 			throw new SdTException("Ergebnis noch nicht eingetragen");
 		}
+		aktuellesSpiel = spiele.get(runde++);
 	}
 	@Override
 	public int anzSpiele () {
@@ -67,5 +70,16 @@ public class Spiel implements Serializable, bedienerInterface{
 	@Override
 	public void addSpiel(MiniSpiel spiel) {
 		spiele.add(spiel);
+	}
+	
+	@Override
+	public ArrayList <MiniSpiel> getSpiele (){
+		return spiele;
+	}
+
+	@Override
+	public void setSpiele(ArrayList<MiniSpiel> spieleListe) {
+		this.spiele = spieleListe;
+		aktuellesSpiel = spiele.get(0);
 	}
 }

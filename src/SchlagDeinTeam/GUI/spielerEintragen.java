@@ -16,12 +16,16 @@ public class spielerEintragen {
 	JFileChooser chooser;
 	ArrayList <teilNehmer> tn;
 	
-	
+	/**
+	 * Parameterloser Konstruktor
+	 */
 	public spielerEintragen() {
 		initialize();
 	}
 
-
+	/**
+	 * Initialisiert das Fenster
+	 */
 	private void initialize() {
 		frm = new JFrame("Spieler Eintragen");
 		pnl = new JPanel();
