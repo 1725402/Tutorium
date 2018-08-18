@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Aufgabe {
 
+	
 	public static void main (String [] args) {
 		Scanner sc = new Scanner(System.in);
 		char kommando = kommandoEinlesen(sc);
