@@ -1,1 +1,1 @@
-typeSearchIndex = [{"p":"aXXXX_JavaDoc","l":"Student"}]
+typeSearchIndex = [{"p":"a0149_JavaDoc_Auto","l":"Auto"},{"p":"a0154_JavaDoc","l":"Student"}]
