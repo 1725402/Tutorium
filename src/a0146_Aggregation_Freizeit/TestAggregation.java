@@ -1,4 +1,4 @@
-package a0145_Aggregation_Freizeit;
+package a0146_Aggregation_Freizeit;
 
 public class TestAggregation {
 	public static void main(String []args) {

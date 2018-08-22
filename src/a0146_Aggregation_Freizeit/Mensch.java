@@ -1,4 +1,4 @@
-package a0145_Aggregation_Freizeit;
+package a0146_Aggregation_Freizeit;
 
 public class Mensch {
 	private Freizeit[] freizeiten = new Freizeit[3];

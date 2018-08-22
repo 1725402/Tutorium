@@ -1,4 +1,4 @@
-package a0144_Override_Student;
+package a0145_Override_Student;
 
 public class Veranstaltung extends Object {
 	private String dozent;
