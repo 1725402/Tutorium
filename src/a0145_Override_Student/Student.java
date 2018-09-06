@@ -43,7 +43,10 @@ public class Student extends Object implements Cloneable{
 	}
 	
 	private void setVeranstaltungen(Veranstaltung[] veranstaltungen) {
-		this.veranstaltungen = veranstaltungen;
+		if (veranstaltungen.length<=6)
+			this.veranstaltungen = veranstaltungen;
+		else
+			System.err.println("Zu viele Veranstaltungen wollen besucht werden");
 	}
 	public Veranstaltung[] getVeranstaltungen () {
 		return veranstaltungen;

@@ -27,7 +27,10 @@ public class Segelboot extends Fahrzeug{
 	}
 
 	public void setAnzSegel(int anzSegel) {
-		this.anzSegel = anzSegel;
+		if (anzSegel>=1)
+			this.anzSegel = anzSegel;
+		else
+			System.err.println("Segelanzahl zu gering");
 	}
 
 }

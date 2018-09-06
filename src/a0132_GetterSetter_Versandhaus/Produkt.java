@@ -17,25 +17,37 @@ public class Produkt {
 		return name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		if (name.length()>5)
+			this.name = name;
+		else
+			System.err.println("Name zu kurz");
 	}
 	public String getMaterial() {
 		return material;
 	}
 	public void setMaterial(String material) {
-		this.material = material;
+		if (material.length()>5)
+			this.material = material;
+		else
+			System.err.println("Materialbezeichnung zu kurz");
 	}
 	public double getPreis() {
 		return preis;
 	}
 	public void setPreis(double preis) {
-		this.preis = preis;
+		if (preis >=.01)
+			this.preis = preis;
+		else
+			System.err.println("Preis zu gering");
 	}
 	public String getProduktKategorie() {
 		return produktKategorie;
 	}
 	public void setProduktKategorie(String produktKategorie) {
-		this.produktKategorie = produktKategorie;
+		if (produktKategorie.length()>5)
+			this.produktKategorie = produktKategorie;
+		else
+			System.err.println("Produktkategorie zu kurz");
 	}
 	
 	@Override

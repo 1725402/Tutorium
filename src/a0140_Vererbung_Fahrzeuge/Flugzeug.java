@@ -27,8 +27,11 @@ public class Flugzeug extends Fahrzeug{
 		return anzTriebwerke;
 	}
 
-	public void setAnzTriebwerke(int anzTriebwerke2) {
-		this.anzTriebwerke = anzTriebwerke2;
+	private void setAnzTriebwerke(int anzTriebwerke) {
+		if (anzTriebwerke>=0)
+			this.anzTriebwerke = anzTriebwerke;
+		else
+			System.err.println("Triebwerksanzahl zu gering");
 	}
 	
 }

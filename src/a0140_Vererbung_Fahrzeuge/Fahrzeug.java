@@ -22,7 +22,10 @@ abstract class Fahrzeug {
 	}
 
 	public void setFahrzeugTyp(String fahrzeugTyp) {
-		this.fahrzeugTyp = fahrzeugTyp;
+		if (fahrzeugTyp.length()>=5)
+			this.fahrzeugTyp = fahrzeugTyp;
+		else
+			System.err.println("Fahrzeugtyp zu kurz");
 	}
 
 	public String getModellName() {
@@ -30,7 +33,10 @@ abstract class Fahrzeug {
 	}
 
 	public void setModellName(String modellName) {
-		this.modellName = modellName;
+		if (modellName.length()>=5)
+			this.modellName = modellName;
+		else
+			System.err.println("Modellname zu kurz");
 	}
 
 	public int getAnzSitze() {
@@ -38,7 +44,10 @@ abstract class Fahrzeug {
 	}
 
 	public void setAnzSitze(int anzSitze) {
-		this.anzSitze = anzSitze;
+		if (anzSitze >=1)
+			this.anzSitze = anzSitze;
+		else
+			System.err.println("Sitzanzahl ungültig");
 	}
 
 	public double getGewicht() {
@@ -46,7 +55,10 @@ abstract class Fahrzeug {
 	}
 
 	public void setGewicht(double gewicht) {
-		this.gewicht = gewicht;
+		if (gewicht >=0)
+			this.gewicht = gewicht;
+		else
+			System.err.println("Gewicht zu gering");
 	}
 	
 	

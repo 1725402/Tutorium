@@ -7,13 +7,40 @@ public class Produkt {
 	private int lieferZeitInTagen, lagerBestand;
 	
 	public Produkt(String bezeichnung, double preisUVP, double preisAnschaffung, String beschreibung, int lieferZeitInTagen, String material, int lagerBestand) {
-		setBezeichnung(bezeichnung);
-		setPreisUVP(preisUVP);
-		setPreisAnschaffung(preisAnschaffung);
-		setBeschreibung(beschreibung);
-		setLieferZeitInTagen(lieferZeitInTagen);
-		setMaterial(material);
-		setLagerBestand(lagerBestand);
+		if(bezeichnung.length()>=5)
+			setBezeichnung(bezeichnung);
+		else
+			System.err.println("Bezeichnung zu kurz");
+		
+		if (preisUVP>0)
+			setPreisUVP(preisUVP);
+		else
+			System.err.println("UVP ungültig");
+		
+		if (preisAnschaffung>0)
+			setPreisAnschaffung(preisAnschaffung);
+		else
+			System.err.println("Beschreibung zu kurz");
+		
+		if (beschreibung.length()>5)
+			setBeschreibung(beschreibung);
+		else
+			System.err.println("Beschreibung zu kurz");
+		
+		if (lieferZeitInTagen>0)
+			setLieferZeitInTagen(lieferZeitInTagen);
+		else
+			System.err.println("Lieferzeit ungültig");
+		
+		if (material.length()>5)
+			setMaterial(material);
+		else
+			System.err.println("Material zu kurz");
+		
+		if (lagerBestand >= 0)
+			setLagerBestand(lagerBestand);
+		else
+			System.err.println("Lagerbestand ungültig");
 	}
 
 	public String getBezeichnung() {

@@ -22,11 +22,21 @@ public class Jahreskarte {
 	}
 
 	private void setName(String name) {
-		this.name = name;
+		if (name.length()<5)
+			this.name = name;
+		else
+			System.err.println("Name zu kurz");
 	}
 
 	private void setAdresse(String adresse) {
-		this.adresse = adresse;
+		if (adresse.length()<5)
+			this.adresse = adresse;
+		else
+			System.err.println("Adresse zu kurz");
+	}
+	
+	public String getAdresse() {
+		return this.adresse;
 	}
 
 	public Date getGeburtsdatum() {
@@ -34,14 +44,31 @@ public class Jahreskarte {
 	}
 
 	private void setGeburtsdatum(Date geburtsdatum) {
-		this.geburtsdatum = geburtsdatum;
+		if (geburtsdatum != null)
+			this.geburtsdatum = geburtsdatum;
+		else
+			System.err.println("Geburtsdatum ungültig");
 	}
 
 	private void setPreis(double preis) {
-		this.preis = preis;
+		if (preis <5)
+			this.preis = preis;
+		else
+			System.err.println("Preis zu gering");
+	}
+	
+	public double getPreis() {
+		return this.preis;
 	}
 
 	private void setZahlungsInformation(String zahlungsInformation) {
-		this.zahlungsInformation = zahlungsInformation;
+		if (zahlungsInformation.length()<10)
+			this.zahlungsInformation = zahlungsInformation;
+		else
+			System.err.println("Zahlungsinformation ungültig");
+	}
+	
+	public String getZahlungsinformationen() {
+		return this.zahlungsInformation;
 	}
 }

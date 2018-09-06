@@ -9,6 +9,7 @@ public class Freizeit {
 		for (int m1=0; m1<30; m1++) {
 			if (teilnehmer[m1] == null) {
 				teilnehmer[m1] = m;
+				m.teilnahmeMitteilen(this);
 				incAnz();
 				System.out.println("Teilnehemr angemeldet. Frei Plätze: " + (30-m1-1));
 				return;
@@ -23,5 +24,15 @@ public class Freizeit {
 	
 	private void incAnz() {
 		anzTeilnehmer++;
+	}
+
+	public void teilnehmerEintragen(Mensch mensch) {
+		if (anzTeilnehmer>30) {
+			System.err.println("Zu viele Teilnehmer");
+			return;
+		}
+		for (int z = 0; z<30;z++)
+			if (teilnehmer[z]==null)
+				teilnehmer[z] = mensch;
 	}
 }
